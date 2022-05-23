@@ -30,6 +30,7 @@ public class Person {
     private String email;
     private String aboutMe;
     private String job;
+    private String location;
 
     @Column(name = "banner_image", length = 2048)
     private String bannerImage;
