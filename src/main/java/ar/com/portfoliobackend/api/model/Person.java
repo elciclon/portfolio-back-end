@@ -23,8 +23,7 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private String lastName;
+    private String fullName;
     private String dateOfBirth;
     private String nationality;
     private String email;
