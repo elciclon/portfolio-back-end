@@ -20,4 +20,8 @@ public class PersonService {
         return personRepository.findById(id);
     }
 
+    public void updatePerson(Person person) {
+        personRepository.save(person);
+    }
+
 }
