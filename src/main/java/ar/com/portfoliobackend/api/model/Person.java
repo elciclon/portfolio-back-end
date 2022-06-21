@@ -23,12 +23,19 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "full_name")
     private String fullName;
+    @Column(name = "date_of_birth")
     private String dateOfBirth;
+    @Column(name = "nationality")
     private String nationality;
+    @Column(name = "email")
     private String email;
+    @Column(name = "about_me")
     private String aboutMe;
+    @Column(name = "job")
     private String job;
+    @Column(name = "location")
     private String location;
 
     @Column(name = "banner_image", length = 2048)
