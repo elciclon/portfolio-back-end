@@ -1,13 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package ar.com.portfoliobackend.api.repository;
 
-/**
- *
- * @author adrian
- */
-public interface IEducationRepository {
-    
+import ar.com.portfoliobackend.api.model.Education;
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface IEducationRepository extends JpaRepository<Education, Long>{
+    List<Education> findByPersonId(Long personId);
 }
