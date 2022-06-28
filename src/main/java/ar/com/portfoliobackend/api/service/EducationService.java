@@ -28,5 +28,7 @@ public class EducationService {
     public void deleteEducationById(Long educationId) {
         educationRepository.deleteById(educationId);
     }
+
     
+
 }

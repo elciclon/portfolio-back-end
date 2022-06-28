@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +27,7 @@ public class PersonController {
     @Autowired
     PersonService personService;
     
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public void savePerson(@RequestBody Person person){
         personService.savePerson(person);
@@ -44,11 +46,20 @@ public class PersonController {
         personService.getPersonById(id).map(person -> {
             personDto.setId(person.getId());
             personDto.setFullName(person.getFullName());
+            personDto.setDateOfBirth(person.getDateOfBirth());
+            personDto.setNationality(person.getNationality());
+            personDto.setEmail(person.getEmail());
+            personDto.setAboutMe(person.getAboutMe());
+            personDto.setJob(person.getJob());
+            personDto.setLocation(person.getLocation());
+            personDto.setBannerImage(person.getBannerImage());
+            personDto.setProfileImage(person.getProfileImage());
             return personDto;  
         }).orElseThrow(() -> new ResourceNotFoundException("No existe la persona " + id));
         return new ResponseEntity<PersonDTO>(personDto, HttpStatus.CREATED);
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<Person> updatePerson(@PathVariable("id") Long id, @RequestBody Person person){
         Optional<Person> personData = personService.getPersonById(id);
@@ -75,6 +86,7 @@ public class PersonController {
         
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deletePerson(@PathVariable("id") Long id){
         personService.deletePersonById(id);
