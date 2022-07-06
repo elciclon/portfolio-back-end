@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -70,5 +71,12 @@ public class LanguageController {
             return languageService.saveLanguage(_language);
         }).orElseThrow(() -> new ResourceNotFoundException("No existe el lenguaje " + languageId));
         return new ResponseEntity<Language>(language, HttpStatus.CREATED);
+    }
+    
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/languages/{languageId}")
+    public ResponseEntity<HttpStatus> deleteLanguage(@PathVariable("languageId") Long languageId){
+        languageService.deleteLanguageById(languageId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

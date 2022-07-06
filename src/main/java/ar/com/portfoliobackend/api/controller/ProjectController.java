@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -71,5 +72,12 @@ public class ProjectController {
             return projectService.saveProject(_project);
         }).orElseThrow(() -> new ResourceNotFoundException("No existe el proyecto " + projectId));
         return new ResponseEntity<Project>(project, HttpStatus.CREATED);
+    }
+    
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/projects/{projectId}")
+    public ResponseEntity<HttpStatus> deleteProject(@PathVariable("projectId") Long projectId){
+        projectService.deleteProjectById(projectId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
