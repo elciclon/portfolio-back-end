@@ -6,10 +6,12 @@ import ar.com.portfoliobackend.api.model.Person;
 import ar.com.portfoliobackend.api.service.PersonService;
 import java.util.List;
 import java.util.Optional;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/person")
 public class PersonController {
@@ -29,7 +32,7 @@ public class PersonController {
     
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public void savePerson(@RequestBody Person person){
+    public void savePerson(@Valid @RequestBody Person person){
         personService.savePerson(person);
     }
     
@@ -61,7 +64,7 @@ public class PersonController {
     
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<Person> updatePerson(@PathVariable("id") Long id, @RequestBody Person person){
+    public ResponseEntity<Person> updatePerson(@PathVariable("id") Long id, @Valid @RequestBody Person person){
         Optional<Person> personData = personService.getPersonById(id);
         if (personData.isPresent()){
             Person _person = personData.get();

@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -22,14 +23,14 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @NotNull    
+    @NotEmpty(message = "the name cannot be empty or null")  
     private String name;
-    @NotNull
+    @NotEmpty(message = "the user name cannot be empty or null")  
     @Column(unique = true)
     private String userName;
-    @NotNull
+    @NotEmpty(message = "the email cannot be empty or null")  
     private String email;
-    @NotNull
+    @NotEmpty(message = "the password cannot be empty or null")  
     private String password;
     @NotNull
     @ManyToMany(fetch = FetchType.EAGER)

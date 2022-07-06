@@ -7,10 +7,12 @@ import ar.com.portfoliobackend.api.service.EducationService;
 import ar.com.portfoliobackend.api.service.PersonService;
 import java.util.List;
 import java.util.Optional;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/person")
 public class EducationController {
@@ -33,7 +36,9 @@ public class EducationController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/{personId}/educations")
     public ResponseEntity<Education> createEducation(@PathVariable(value = "personId") Long personId, 
-                                                     @RequestBody Education educationRequest) throws ResourceNotFoundException{
+                                                     @Valid                                         
+                                                     @RequestBody Education educationRequest) 
+                                                     throws ResourceNotFoundException{
         Education education = personService.getPersonById(personId).map(person -> {
             educationRequest.setPerson(person);
             return educationService.saveEducation(educationRequest);
@@ -56,6 +61,7 @@ public class EducationController {
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/educations/{educationId}")
     public ResponseEntity<Education> updateEducation(@PathVariable("educationId") Long educationId, 
+                                                     @Valid
                                                      @RequestBody Education education)
                                                      throws ResourceNotFoundException{
             educationService.findById(educationId).map(educationData -> {
@@ -70,7 +76,7 @@ public class EducationController {
             _education.setUrlImage(education.getUrlImage());
             _education.setPerson(educationData.getPerson());
             return educationService.saveEducation(_education);
-        }).orElseThrow(() -> new ResourceNotFoundException("No existe la eduación " + educationId));
+        }).orElseThrow(() -> new ResourceNotFoundException("No existe la educación " + educationId));
         return new ResponseEntity<Education>(education, HttpStatus.CREATED);
     }
    
@@ -80,6 +86,5 @@ public class EducationController {
         educationService.deleteEducationById(educationId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    
-    
+       
 }

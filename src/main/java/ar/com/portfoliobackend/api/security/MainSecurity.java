@@ -43,7 +43,7 @@ public class MainSecurity extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
             .antMatchers("/auth/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/api/person/allpersons").permitAll()
+            .antMatchers(HttpMethod.GET, "/api/person/**").permitAll()
             .anyRequest().authenticated()
             .and().exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
             .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

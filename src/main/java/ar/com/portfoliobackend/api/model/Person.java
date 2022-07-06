@@ -50,5 +50,17 @@ public class Person {
     
     @OneToMany(fetch = FetchType.LAZY, mappedBy="person", cascade = CascadeType.ALL)
     private List<Education> educations;
-       
+    
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="person", cascade = CascadeType.ALL)
+    private List<Experience> experiences;
+    
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="person", cascade = CascadeType.ALL)
+    private List<Skill> skills;
+    
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="person", cascade = CascadeType.ALL)
+    private List<Language> languages;
+    
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="person", cascade = CascadeType.ALL)
+    private List<Project> projects;
+    
 }
