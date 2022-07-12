@@ -67,6 +67,8 @@ public class ProjectController {
             _project.setId(projectId);
             _project.setProjectTitle(project.getProjectTitle());
             _project.setProjectDescription(project.getProjectDescription());
+            _project.setProjectDate(project.getProjectDate());
+            _project.setProjectLink(project.getProjectLink());
             _project.setUrlImage(project.getUrlImage());
             _project.setPerson(projectData.getPerson());
             return projectService.saveProject(_project);

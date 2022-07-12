@@ -28,6 +28,8 @@ public class Project {
     
     private String projectTitle;
     private String projectDescription;
+    private int projectDate;
+    private String projectLink;
         
     @Column(name = "url_image", length = 2048)
     private String urlImage;
